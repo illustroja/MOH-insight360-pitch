@@ -1,0 +1,1133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSIGHT360 — CEO Pitch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --ink: #0a0a14;
+      --paper: #f5f2ec;
+      --accent: #d4410c;
+      --accent2: #1a4f8a;
+      --muted: #6b6760;
+      --line: rgba(10,10,20,0.12);
+      --white: #ffffff;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; width:100%; z-index:200;
+      background: rgba(10,10,20,0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 48px;
+    }
+    nav .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent);
+    }
+    nav ul { list-style:none; display:flex; gap:28px; }
+    nav ul li a {
+      text-decoration:none; font-size:0.82rem; font-weight:500;
+      color: rgba(255,255,255,0.45); letter-spacing:0.5px;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover, nav ul li a.active { color: var(--white); }
+
+    /* ── PROGRESS ── */
+    .slide-progress {
+      position: fixed; bottom:28px; left:50%; transform:translateX(-50%);
+      z-index:200; display:flex; gap:8px; align-items:center;
+    }
+    .dot {
+      width:8px; height:8px; border-radius:50%;
+      background: rgba(255,255,255,0.2);
+      cursor:pointer; transition: all 0.3s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(212,65,12,0.6);
+      transform: scale(1.3);
+    }
+
+    /* ── AUTO-PLAY ── */
+    .auto-play-controls {
+      position:fixed; bottom:22px; right:48px; z-index:200;
+      display:flex; align-items:center; gap:4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius:20px; padding:4px 10px;
+    }
+    .ap-btn {
+      background:none; border:none; color:rgba(255,255,255,0.4);
+      cursor:pointer; font-family:'DM Sans',sans-serif;
+      font-size:0.78rem; padding:2px 6px; transition:color 0.2s;
+    }
+    .ap-btn:hover { color: var(--accent); }
+    .ap-btn.playing { color: var(--accent); }
+    .ap-speed-btn {
+      width:22px; height:22px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; opacity:0; pointer-events:none;
+      transition: all 0.2s;
+    }
+    .auto-play-controls.show-speed .ap-speed-btn {
+      opacity:1; pointer-events:auto;
+    }
+    .ap-speed-display {
+      font-size:0.68rem; color:var(--accent); min-width:24px;
+      text-align:center; opacity:0; transition:opacity 0.2s;
+    }
+    .auto-play-controls.show-speed .ap-speed-display { opacity:1; }
+
+    /* ── SECTIONS ── */
+    section {
+      min-height:100vh; display:flex; align-items:center;
+      justify-content:center;
+      padding:80px 60px 80px;
+      position:relative; overflow:hidden;
+    }
+    .container { max-width:1080px; width:100%; margin:0 auto; }
+
+    /* ── NEXT CUE ── */
+    .next-cue {
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+      opacity:0.3; text-decoration:none; color:var(--white);
+      cursor:pointer; transition:opacity 0.3s;
+    }
+    .next-cue:hover { opacity:0.8; }
+    .next-cue span { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; }
+    .next-cue .arr {
+      width:14px; height:14px;
+      border-right:1.5px solid white; border-bottom:1.5px solid white;
+      transform:rotate(45deg);
+      animation: bonce 1.6s infinite;
+    }
+    @keyframes bonce {
+      0%,100% { transform:rotate(45deg) translateY(0); }
+      50% { transform:rotate(45deg) translateY(4px); }
+    }
+
+    /* ── LABEL ── */
+    .label {
+      font-size:0.72rem; font-weight:700; letter-spacing:3px;
+      text-transform:uppercase; color:var(--accent);
+      margin-bottom:12px; display:block;
+    }
+    .h1 {
+      font-family:'Syne',sans-serif;
+      font-size:3rem;
+      font-weight:700; line-height:1.15;
+      letter-spacing:0;
+    }
+    .h2 {
+      font-family:'Syne',sans-serif;
+      font-size:1.9rem;
+      font-weight:700; line-height:1.2;
+      letter-spacing:0;
+    }
+    @media (max-width:800px) {
+      .h1 { font-size:2rem; }
+      .h2 { font-size:1.4rem; }
+    }
+    em { font-style:normal; color:var(--accent); }
+
+    /* ── FADE IN ── */
+    .fade {
+      opacity:0; transform:translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade.delay1 { transition-delay:0.15s; }
+    .fade.delay2 { transition-delay:0.30s; }
+    .fade.delay3 { transition-delay:0.45s; }
+    .fade.delay4 { transition-delay:0.60s; }
+    .fade.visible { opacity:1; transform:translateY(0); }
+
+    /* ============================================
+       SLIDE 1 — HERO
+    ============================================ */
+    #hero {
+      background: var(--ink);
+      text-align:left;
+    }
+    #hero::before {
+      content:'';
+      position:absolute; top:0; right:0;
+      width:100%; height:100%;
+      background: radial-gradient(ellipse at 80% 50%, rgba(40,20,5,0.5) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(212,65,12,0.4);
+      border-radius:4px; padding:5px 14px;
+      font-size:0.72rem; letter-spacing:2px; text-transform:uppercase;
+      color:rgba(255,255,255,0.5); margin-bottom:32px;
+    }
+    .hero-tag .dot-live {
+      width:6px; height:6px; border-radius:50%;
+      background:var(--accent);
+      animation: pulse-red 2s infinite;
+    }
+    @keyframes pulse-red {
+      0%,100% { box-shadow:0 0 0 0 rgba(212,65,12,0.6); }
+      50% { box-shadow:0 0 0 6px rgba(212,65,12,0); }
+    }
+    #hero .h1 { margin-bottom:8px; }
+    #hero .h1 .sub {
+      font-family:'DM Sans',sans-serif;
+      font-size:1.1rem;
+      font-weight:300; display:block;
+      color:rgba(255,255,255,0.5); letter-spacing:1px;
+      margin-top:4px;
+    }
+    #hero p {
+      font-size:1.05rem; color:rgba(255,255,255,0.55);
+      max-width:540px; line-height:1.75;
+      margin:28px 0 0;
+    }
+    .hero-cta-row {
+      display:flex; gap:16px; align-items:center; margin-top:36px;
+      flex-wrap:wrap;
+    }
+    .btn-primary {
+      background:var(--accent);
+      color:white; font-family:'Syne',sans-serif;
+      font-weight:700; font-size:0.85rem; letter-spacing:1px;
+      padding:12px 28px; border-radius:4px;
+      text-decoration:none; text-transform:uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(212,65,12,0.4); }
+    .hero-stat-strip {
+      display:flex; gap:0;
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:6px; overflow:hidden;
+      margin-top:52px;
+      max-width:580px;
+    }
+    .hero-stat {
+      flex:1; padding:16px 20px;
+      border-right:1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat:last-child { border-right:none; }
+    .hero-stat .n {
+      font-family:'Syne',sans-serif;
+      font-size:1.5rem; font-weight:700;
+      color:var(--accent); line-height:1;
+      margin-bottom:4px;
+    }
+    .hero-stat .l {
+      font-size:0.75rem; color:rgba(255,255,255,0.4);
+      line-height:1.4;
+    }
+
+    /* ============================================
+       SLIDE 2 — PROBLEM
+    ============================================ */
+    #problem {
+      background: linear-gradient(160deg, #0d0d1f 0%, #100a04 100%);
+    }
+    .problem-layout {
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;
+    }
+    .cost-box {
+      background:rgba(212,65,12,0.08);
+      border:1px solid rgba(212,65,12,0.25);
+      border-radius:12px; padding:32px 28px;
+      margin-top:28px;
+    }
+    .cost-box .cost-n {
+      font-family:'Syne',sans-serif;
+      font-size:2.2rem; font-weight:700;
+      color:var(--accent); line-height:1; margin-bottom:6px;
+    }
+    .cost-box .cost-l {
+      font-size:0.82rem; color:rgba(255,255,255,0.5);
+      line-height:1.5; max-width:240px;
+    }
+    .pain-list { display:flex; flex-direction:column; gap:16px; }
+    .pain-item {
+      display:flex; gap:16px; align-items:flex-start;
+      padding:18px 20px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px;
+      transition: border-color 0.3s;
+    }
+    .pain-item:hover { border-color:rgba(212,65,12,0.3); }
+    .pain-icon {
+      width:36px; height:36px; border-radius:8px;
+      background:rgba(212,65,12,0.12);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; flex-shrink:0;
+    }
+    .pain-item strong {
+      display:block; font-size:0.92rem; font-weight:600;
+      color:white; margin-bottom:3px;
+    }
+    .pain-item p {
+      font-size:0.8rem; color:rgba(255,255,255,0.45); line-height:1.5;
+    }
+    .stat-row {
+      display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;
+    }
+    .mini-stat {
+      flex:1; min-width:100px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:8px; padding:14px 12px; text-align:center;
+    }
+    .mini-stat .mn {
+      font-family:'Syne',sans-serif;
+      font-size:1.4rem; font-weight:700;
+      color:var(--accent); line-height:1; margin-bottom:3px;
+    }
+    .mini-stat .ml {
+      font-size:0.72rem; color:rgba(255,255,255,0.4); line-height:1.4;
+    }
+
+    /* ============================================
+       SLIDE 3 — SOLUTION
+    ============================================ */
+    #solution { background: var(--ink); }
+    .solution-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+      margin-top:36px;
+    }
+    .flow-left { display:flex; flex-direction:column; gap:10px; }
+    .src-card {
+      display:flex; align-items:center; gap:12px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:8px; padding:12px 16px;
+      font-size:0.85rem; color:rgba(255,255,255,0.7);
+      transition: all 0.3s;
+    }
+    .src-card:hover {
+      border-color:rgba(212,65,12,0.35);
+      transform:translateX(6px);
+      color:white;
+    }
+    .src-card .si { font-size:1.2rem; flex-shrink:0; }
+    .flow-arrow-col {
+      display:flex; flex-direction:column;
+      align-items:center; gap:6px; margin:0 4px;
+    }
+    .flow-arrow-col .fa-line {
+      width:2px; flex:1;
+      background:linear-gradient(180deg, transparent, rgba(212,65,12,0.5), transparent);
+    }
+    .unified-box {
+      background: linear-gradient(135deg, #1a1a3a 0%, #2d1a0a 100%);
+      border:1px solid rgba(212,65,12,0.3);
+      border-radius:16px; padding:32px 28px;
+      position:relative; overflow:hidden;
+    }
+    .unified-box::before {
+      content:'';
+      position:absolute; top:-40px; right:-40px;
+      width:140px; height:140px; border-radius:50%;
+      background:rgba(212,65,12,0.08);
+    }
+    .unified-box .ub-icon {
+      font-size:2rem; margin-bottom:10px; display:block;
+    }
+    .unified-box h3 {
+      font-family:'Syne',sans-serif;
+      font-size:1.3rem; font-weight:700;
+      margin-bottom:6px; color:white;
+    }
+    .unified-box p {
+      font-size:0.82rem; color:rgba(255,255,255,0.5);
+      line-height:1.6; margin-bottom:18px;
+    }
+    .ub-features { display:flex; flex-direction:column; gap:8px; }
+    .ub-feat {
+      display:flex; align-items:center; gap:10px;
+      background:rgba(255,255,255,0.07);
+      border-radius:8px; padding:9px 14px;
+      font-size:0.8rem; color:rgba(255,255,255,0.75);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+    .ub-feat .fi { font-size:0.9rem; }
+
+    /* How it works row */
+    .workflow-row {
+      display:flex; gap:0; margin-top:52px;
+      border:1px solid rgba(255,255,255,0.08); border-radius:10px; overflow:hidden;
+    }
+    .wf-step {
+      flex:1; padding:18px 16px; text-align:center;
+      border-right:1px solid rgba(255,255,255,0.08);
+      transition: background 0.3s;
+    }
+    .wf-step:last-child { border-right:none; }
+    .wf-step:hover { background:rgba(212,65,12,0.06); }
+    .wf-n {
+      font-family:'Syne',sans-serif;
+      font-size:0.65rem; font-weight:700;
+      letter-spacing:2px; text-transform:uppercase;
+      color:var(--accent); margin-bottom:6px;
+    }
+    .wf-step strong {
+      display:block; font-size:0.85rem;
+      font-weight:600; color:white; margin-bottom:4px;
+    }
+    .wf-step p { font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.4; }
+
+    /* ============================================
+       SLIDE 4 — FEATURES (DEMO CUE)
+    ============================================ */
+    #features { background: linear-gradient(160deg, #0d0d1f 0%, #100a04 100%); }
+    .demo-banner {
+      background:rgba(212,65,12,0.1);
+      border:1px solid rgba(212,65,12,0.3);
+      border-radius:8px; padding:14px 20px;
+      display:flex; align-items:center; gap:12px;
+      margin-bottom:32px;
+      font-size:0.85rem; color:rgba(255,255,255,0.8);
+    }
+    .demo-banner .live-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:var(--accent); flex-shrink:0;
+      animation:pulse-red 2s infinite;
+    }
+    .feat-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+    }
+    .feat-card {
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px; overflow:hidden;
+      transition: all 0.3s; display:flex; flex-direction:column;
+    }
+    .feat-card:hover {
+      border-color:rgba(212,65,12,0.3);
+      transform:translateY(-4px);
+      box-shadow:0 16px 40px rgba(0,0,0,0.3);
+    }
+    .fc-img {
+      width:100%; aspect-ratio:16/9;
+      background:rgba(0,0,0,0.3);
+      overflow:hidden; position:relative;
+    }
+    .fc-img img { width:100%; height:100%; object-fit:cover; object-position:top left; transition:transform 0.4s; }
+    .feat-card:hover .fc-img img { transform:scale(1.05); }
+    .fc-num {
+      position:absolute; top:10px; left:10px;
+      background:rgba(10,10,20,0.85);
+      border:1px solid rgba(212,65,12,0.4);
+      border-radius:4px; padding:2px 8px;
+      font-size:0.65rem; font-weight:700;
+      letter-spacing:2px; text-transform:uppercase;
+      color:var(--accent);
+    }
+    .fc-body { padding:16px 18px 20px; flex:1; display:flex; flex-direction:column; }
+    .fc-title { font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:700; color:white; margin-bottom:8px; }
+    .fc-tags { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+    .fc-tag {
+      font-size:0.67rem; font-weight:600;
+      padding:2px 9px; border-radius:3px;
+      background:rgba(212,65,12,0.12);
+      color:rgba(255,200,180,0.8);
+      border:1px solid rgba(212,65,12,0.2);
+      text-transform:uppercase; letter-spacing:0.5px;
+    }
+    .fc-desc { font-size:0.78rem; color:rgba(255,255,255,0.45); line-height:1.55; margin-bottom:12px; flex:1; }
+    .fc-impact {
+      font-size:0.78rem; font-weight:600;
+      color:rgba(255,200,180,0.85);
+      background:rgba(212,65,12,0.12);
+      border-radius:6px; padding:9px 12px;
+      border-left:2px solid var(--accent);
+    }
+
+    /* ============================================
+       SLIDE 5 — DE-RISKING
+    ============================================ */
+    #risks { background:var(--ink); }
+    .risk-header { margin-bottom:36px; }
+    .risks-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .risk-card {
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:12px; padding:22px 24px;
+      transition: border-color 0.3s;
+    }
+    .risk-card:hover { border-color:rgba(26,79,138,0.4); }
+    .risk-card .rc-top {
+      display:flex; align-items:center; gap:10px; margin-bottom:10px;
+    }
+    .rc-icon {
+      width:32px; height:32px; border-radius:6px;
+      background:rgba(26,79,138,0.15);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.9rem; flex-shrink:0;
+    }
+    .rc-title { font-size:0.9rem; font-weight:700; color:white; }
+    .rc-mitigate { font-size:0.78rem; color:rgba(255,255,255,0.45); line-height:1.55; }
+    .rc-status {
+      margin-top:10px; display:inline-flex; align-items:center; gap:6px;
+      font-size:0.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+      color:#4ade80; background:rgba(74,222,128,0.1);
+      border:1px solid rgba(74,222,128,0.2);
+      border-radius:4px; padding:3px 8px;
+    }
+    .rc-status::before {
+      content:''; width:5px; height:5px; border-radius:50%;
+      background:#4ade80;
+    }
+    .proof-row {
+      display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;
+    }
+    .proof-pill {
+      display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:6px; padding:10px 16px;
+      font-size:0.8rem; color:rgba(255,255,255,0.6);
+    }
+    .proof-pill strong { color:white; }
+
+    /* ============================================
+       SLIDE 6 — IMPACT
+    ============================================ */
+    #impact { background: linear-gradient(160deg, #0d0d1f 0%, #100a04 100%); text-align:center; }
+
+    .impact-icon-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:16px; max-width:760px; margin:0 auto 28px;
+    }
+    .iig-item {
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px; padding:20px 14px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .iig-item:hover {
+      border-color:rgba(212,65,12,0.35);
+      transform:translateY(-3px);
+    }
+    .iig-icon { font-size:1.6rem; margin-bottom:8px; }
+    .iig-num {
+      font-family:'Syne',sans-serif;
+      font-size:1.1rem; font-weight:700;
+      color:var(--accent); line-height:1; margin-bottom:6px;
+    }
+    .iig-label { font-size:0.75rem; color:rgba(255,255,255,0.55); line-height:1.5; }
+
+    .impact-badge {
+      display:inline-block;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:20px; padding:7px 18px;
+      font-size:0.75rem; letter-spacing:0.8px;
+      color:rgba(255,255,255,0.5); margin-bottom:20px;
+    }
+
+    .approval-box {
+      display:flex; align-items:flex-start; gap:14px;
+      max-width:620px; margin:0 auto 24px;
+      background:rgba(74,222,128,0.06);
+      border:1px solid rgba(74,222,128,0.25);
+      border-radius:12px; padding:20px 24px;
+      text-align:left;
+    }
+    .appr-icon { font-size:1.3rem; flex-shrink:0; margin-top:2px; }
+    .appr-title {
+      font-size:0.92rem; font-weight:700;
+      color:#4ade80; margin-bottom:5px; line-height:1.4;
+    }
+    .appr-sub {
+      font-size:0.75rem; color:rgba(255,255,255,0.4); line-height:1.5;
+    }
+
+    .closing-quote {
+      font-size:0.92rem; font-style:italic;
+      color:rgba(255,255,255,0.4); max-width:520px;
+      margin:0 auto; line-height:1.7;
+    }
+
+    footer {
+      background:#050508;
+      color:rgba(255,255,255,0.2);
+      text-align:center; padding:20px;
+      font-size:0.75rem; letter-spacing:1.5px; text-transform:uppercase;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:800px) {
+      nav { padding:10px 24px; }
+      nav ul { gap:16px; }
+      section { padding:70px 24px 80px; }
+      .problem-layout, .solution-grid, .risks-grid, .feat-grid { grid-template-columns:1fr; }
+      .impact-icon-grid { grid-template-columns:repeat(2,1fr); max-width:400px; margin-left:auto; margin-right:auto; }
+      .approval-box { flex-direction:column; gap:8px; }
+      #hero::before { display:none; }
+      .workflow-row { flex-direction:column; }
+      .wf-step { border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); }
+    }
+  </style>
+</head>
+
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">INSIGHT360</div>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#features">Demo</a></li>
+    <li><a href="#risks">De-risking</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+</nav>
+
+<!-- PROGRESS DOTS -->
+<div class="slide-progress">
+  <div class="dot active" data-slide="hero"></div>
+  <div class="dot" data-slide="problem"></div>
+  <div class="dot" data-slide="solution"></div>
+  <div class="dot" data-slide="features"></div>
+  <div class="dot" data-slide="risks"></div>
+  <div class="dot" data-slide="impact"></div>
+</div>
+
+<!-- AUTO-PLAY -->
+<div class="auto-play-controls" id="autoPlayControls">
+  <button class="ap-btn ap-speed-btn" id="speedDownBtn">+</button>
+  <button class="ap-btn" id="autoPlayBtn" style="display:flex;align-items:center;gap:4px;">
+    <span class="play-icon">▶</span>
+    <span style="font-size:0.78rem;">Auto</span>
+  </button>
+  <button class="ap-btn ap-speed-btn" id="speedUpBtn">-</button>
+  <div class="ap-speed-display" id="speedDisplay">5s</div>
+</div>
+
+<!-- ============================================
+     SLIDE 1: HERO
+============================================ -->
+<section id="hero">
+  <div class="container">
+    <div class="fade">
+      <div class="hero-tag">
+        <span class="dot-live"></span>
+        {build} 2026 Hackathon &nbsp;·&nbsp; IFC × Health Regulation Group &nbsp;·&nbsp; Surveillance & Enforcement Division
+      </div>
+    </div>
+    <div class="fade delay1">
+      <h1 class="h1">
+        INSIGHT360
+        <span class="sub">Enforcement View</span>
+      </h1>
+    </div>
+    <div class="fade delay2">
+      <p>300 officers. Scattered investigation data. 4 hours wasted per case.<br>
+      We built one platform to fix all this — validated with frontline officers.</p>
+    </div>
+    <div class="fade delay3">
+      <div class="hero-stat-strip">
+        <div class="hero-stat">
+          <div class="n">4h</div>
+          <div class="l">manual work per case<br>eliminated</div>
+        </div>
+        <div class="hero-stat">
+          <div class="n">$4.4M</div>
+          <div class="l">annual savings<br>(MOH SED officers)</div>
+        </div>
+        <div class="hero-stat">
+          <div class="n">3</div>
+          <div class="l">co-design iterations<br>with SED officers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#problem" class="next-cue">
+    <span>Scroll</span><div class="arr"></div>
+  </a>
+</section>
+
+<!-- ============================================
+     SLIDE 2: PROBLEM
+============================================ -->
+<section id="problem">
+  <div class="container">
+    <div class="problem-layout">
+      <div>
+        <div class="fade">
+          <span class="label">The Problem</span>
+          <h2 class="h2">Our officers are investigators — not <em>data clerks.</em></h2>
+        </div>
+        <div class="fade delay1">
+          <div class="cost-box">
+            <div class="cost-n">$4.4M</div>
+            <div class="cost-l">estimated annual savings from MOH SED officers. Scaling to all 300 officers across 3 agencies: <strong style="color:rgba(255,255,255,0.8)">$11M+ annually.</strong></div>
+          </div>
+          <div class="stat-row" style="margin-top:16px;">
+            <div class="mini-stat">
+              <div class="mn">300</div>
+              <div class="ml">officers across 3 agencies</div>
+            </div>
+            <div class="mini-stat">
+              <div class="mn">4h</div>
+              <div class="ml">manual work per case</div>
+            </div>
+            <div class="mini-stat">
+              <div class="mn">20×</div>
+              <div class="ml">cases per officer/month</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade delay2">
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-icon">⚠️</div>
+            <div>
+              <strong>Scattered, Disconnected Data</strong>
+              <p>Officers manually search across statements, evidence docs, expert reports, and historical records — across multiple siloed systems.</p>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">⏳</div>
+            <div>
+              <strong>4 Hours Lost Per Case</strong>
+              <p>With 20 cases/month, each officer spends <strong style="color:white">120 working days per year</strong> on document management instead of actual enforcement.</p>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">🔍</div>
+            <div>
+              <strong>Hidden Connections & Repeat Offenders Missed</strong>
+              <p>Without a unified view, linked cases and repeat violations slip through. Inconsistencies in statements go undetected.</p>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon">📈</div>
+            <div>
+              <strong>Growing Caseload, No Headcount Growth</strong>
+              <p>Case volumes are projected to grow <strong style="color:white">10% annually</strong> — the manual approach simply won't scale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#solution" class="next-cue"><span>Next</span><div class="arr"></div></a>
+</section>
+
+<!-- ============================================
+     SLIDE 3: SOLUTION
+============================================ -->
+<section id="solution">
+  <div class="container">
+    <div class="fade" style="text-align:center;">
+      <span class="label">The Solution</span>
+      <h2 class="h2">One screen. Every record. <em>Instant context.</em></h2>
+    </div>
+
+    <div class="solution-grid fade delay1">
+      <!-- LEFT: Sources -->
+      <div>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">Fragmented inputs today</p>
+        <div class="flow-left">
+          <div class="src-card"><span class="si">📋</span> Investigation Statements</div>
+          <div class="src-card"><span class="si">🔍</span> Evidence Documentation</div>
+          <div class="src-card"><span class="si">📄</span> Expert & Medical Reports</div>
+          <div class="src-card"><span class="si">🗂️</span> Historical Case Records</div>
+          <div class="src-card"><span class="si">🖼️</span> Images & Site Evidence</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Unified Platform -->
+      <div>
+        <p style="font-size:0.8rem;color:rgba(212,65,12,0.7);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">Unified via INSIGHT360</p>
+        <div class="unified-box">
+          <span class="ub-icon">🤖</span>
+          <h3>INSIGHT360</h3>
+          <p>A single AI-powered platform that synthesises all data sources, surfaces insights instantly, and maps to officers' existing investigation workflow.</p>
+          <div class="ub-features">
+            <div class="ub-feat"><span class="fi">🔗</span> Case Analysis & Relationship Network</div>
+            <div class="ub-feat"><span class="fi">📑</span> Document Authenticity & Discrepancy Check</div>
+            <div class="ub-feat"><span class="fi">🖼️</span> Image Violation Detection</div>
+            <div class="ub-feat"><span class="fi">⚖️</span> HSA Act Cross-check & Outcome Assist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflow Steps -->
+    <div class="workflow-row fade delay2">
+      <div class="wf-step">
+        <div class="wf-n">Stage 01</div>
+        <strong>Info Gathering</strong>
+        <p>Identify subjects, check licensing status, flag duplicates, surface linked cases</p>
+      </div>
+      <div class="wf-step">
+        <div class="wf-n">Stage 02</div>
+        <strong>Investigation</strong>
+        <p>Cross-check against HSA Act, compare statements, detect inconsistencies</p>
+      </div>
+      <div class="wf-step">
+        <div class="wf-n">Stage 03</div>
+        <strong>Outcome</strong>
+        <p>AI-assisted report drafting, outcome recommendation with source citations</p>
+      </div>
+    </div>
+  </div>
+  <a href="#features" class="next-cue"><span>Next</span><div class="arr"></div></a>
+</section>
+
+<!-- ============================================
+     SLIDE 4: FEATURES + DEMO CUE
+============================================ -->
+<section id="features">
+  <div class="container">
+    <div class="fade">
+      <span class="label">The Features — Live Demo</span>
+      <h2 class="h2" style="margin-bottom:20px;">Three capabilities that <em>transform</em> investigations.</h2>
+    </div>
+
+    <div class="demo-banner fade delay1">
+      <div class="live-dot"></div>
+      <span><strong>Demo moment</strong> — Walk panelists through the live system here. Each feature card maps directly to what you'll show.</span>
+    </div>
+
+    <div class="feat-grid fade delay2">
+      <div class="feat-card">
+        <div class="fc-img">
+          <img src="Image-Case Relationships.png" alt="Case Analysis">
+          <div class="fc-num">01</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-title">Case Analysis & Relationship Network</div>
+          <div class="fc-tags">
+            <span class="fc-tag">AI Summary</span>
+            <span class="fc-tag">Network Graph</span>
+            <span class="fc-tag">Pattern Detection</span>
+          </div>
+          <div class="fc-desc">AI-generated case summaries + visual relationship mapping that surfaces hidden patterns and repeat offenders instantly.</div>
+          <div class="fc-impact">No repeat offender slips through the cracks.</div>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="fc-img">
+          <img src="Image-Statements Comparison.png" alt="Document Analysis">
+          <div class="fc-num">02</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-title">Document Analysis & Authenticity Check</div>
+          <div class="fc-tags">
+            <span class="fc-tag">Discrepancy Detection</span>
+            <span class="fc-tag">Severity Rating</span>
+          </div>
+          <div class="fc-desc">AI compares statements, medical records, and reports — automatically flagging inconsistencies with severity ratings and source citations.</div>
+          <div class="fc-impact">Catch discrepancies in seconds, not hours.</div>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="fc-img">
+          <img src="Image-Image Analysis.png" alt="Image Analysis">
+          <div class="fc-num">03</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-title">Image Analysis & Violation Detection</div>
+          <div class="fc-tags">
+            <span class="fc-tag">Auto-Tagging</span>
+            <span class="fc-tag">Confidence Score</span>
+            <span class="fc-tag">AI Recommendations</span>
+          </div>
+          <div class="fc-desc">Automatically analyse images and flag regulatory violations — with confidence scores so officers act on findings, not hunt for them.</div>
+          <div class="fc-impact">Act on findings, not hunt for them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#risks" class="next-cue"><span>Next</span><div class="arr"></div></a>
+</section>
+
+<!-- ============================================
+     SLIDE 5: DE-RISKING
+============================================ -->
+<section id="risks">
+  <div class="container">
+    <div class="risk-header fade">
+      <span class="label">Risk & Mitigation</span>
+      <h2 class="h2">We've thought through the hard questions — <em>here's how we've addressed them.</em></h2>
+    </div>
+
+    <div class="risks-grid fade delay1">
+      <div class="risk-card">
+        <div class="rc-top">
+          <div class="rc-icon">🔒</div>
+          <div class="rc-title">Data Security</div>
+        </div>
+        <div class="rc-mitigate">Sensitive investigation records require a secure environment. Production data will only be used after proper data approval, classification review, and technical governance sign-off.</div>
+        <div class="rc-status">In-scope for operationalisation</div>
+      </div>
+
+      <div class="risk-card">
+        <div class="rc-top">
+          <div class="rc-icon">👥</div>
+          <div class="rc-title">Officer Adoption</div>
+        </div>
+        <div class="rc-mitigate">Resistance mitigated through 3 iterative co-design sessions with frontline SED officers. Tool maps to existing workflow, minimising learning curve. Officers own the final decision — AI outputs are drafts.</div>
+        <div class="rc-status">3 iterations completed</div>
+      </div>
+
+      <div class="risk-card">
+        <div class="rc-top">
+          <div class="rc-icon">🎯</div>
+          <div class="rc-title">AI Accuracy</div>
+        </div>
+        <div class="rc-mitigate">All AI outputs cite source documents. Officers remain final decision-makers. Feedback loop and periodic audits built in. Phased rollout with experienced officers to catch issues early.</div>
+        <div class="rc-status">Model validated with SED officers</div>
+      </div>
+
+      <div class="risk-card">
+        <div class="rc-top">
+          <div class="rc-icon">📈</div>
+          <div class="rc-title">Scalability</div>
+        </div>
+        <div class="rc-mitigate">Cloud-based infrastructure with dynamic scaling. Modular architecture allows components to scale independently. Benchmarked against 10% annual case volume growth projections.</div>
+        <div class="rc-status">Architecture ready</div>
+      </div>
+    </div>
+
+    <div class="proof-row fade delay2">
+      <div class="proof-pill">
+        <span>✅</span>
+        <span><strong>Stakeholder buy-in</strong> — MOH SED signed on</span>
+      </div>
+      <div class="proof-pill">
+        <span>✅</span>
+        <span><strong>Anthropic Claude</strong> — model selected & validated</span>
+      </div>
+      <div class="proof-pill">
+        <span>✅</span>
+        <span><strong>3× user feedback</strong> sessions completed</span>
+      </div>
+    </div>
+  </div>
+  <a href="#impact" class="next-cue"><span>Next</span><div class="arr"></div></a>
+</section>
+
+<!-- ============================================
+     SLIDE 6: IMPACT
+============================================ -->
+<section id="impact">
+  <div class="container fade" style="text-align:center;">
+    <span class="label">The Impact</span>
+    <h2 class="h2" style="max-width:680px;margin:0 auto 32px;">Give MOH SED officers<em> back 120 mandays a year</em>  — affecting up to 300 officers when we scale.</h2>
+
+    <div class="impact-icon-grid fade delay1">
+      <div class="iig-item">
+        <div class="iig-icon">⏱️</div>
+        <div class="iig-num">↓ Time</div>
+        <div class="iig-label">4 hours per case returned to real investigation work</div>
+      </div>
+      <div class="iig-item">
+        <div class="iig-icon">✅</div>
+        <div class="iig-num">↓ Errors</div>
+        <div class="iig-label">Fewer mistakes from manual collation across disconnected systems</div>
+      </div>
+      <div class="iig-item">
+        <div class="iig-icon">⚡</div>
+        <div class="iig-num">↑ Speed</div>
+        <div class="iig-label">Faster case resolution — $4.4M/yr for MOH SED officers; $11M+ at full scale</div>
+      </div>
+      <div class="iig-item">
+        <div class="iig-icon">📈</div>
+        <div class="iig-num">↑ Quality</div>
+        <div class="iig-label">Higher consistency and thoroughness in enforcement outcomes</div>
+      </div>
+    </div>
+
+    <div class="impact-badge fade delay2">
+      Built for MOH &nbsp;·&nbsp; Powered by Gen-AI &nbsp;·&nbsp; Co-designed with Surveillance & Enforcement Division Officers
+    </div>
+
+    <div class="approval-box fade delay3">
+      <div class="appr-icon">🟢</div>
+      <div>
+        <div class="appr-title">Internal approval has been obtained to proceed to operationalisation.</div>
+        <div class="appr-sub">MOH Surveillance & Enforcement Division · Stakeholder alignment complete · Phased rollout ready to commence</div>
+      </div>
+    </div>
+
+    <p class="closing-quote fade delay4">"Our enforcement officers were trained to protect public health — not admin work.<br>Let's give them back that purpose."</p>
+  </div>
+</section>
+
+<footer>
+  RESTRICTED · SENSITIVE NORMAL &nbsp;·&nbsp; INSIGHT360 &nbsp;·&nbsp; IFC × Health Regulation Group
+</footer>
+
+<script>
+    // ==========================================
+    // FADE-IN OBSERVER
+    // ==========================================
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade').forEach(el => fadeObserver.observe(el));
+
+    // ==========================================
+    // SLIDE NAVIGATION & PROGRESS DOTS
+    // ==========================================
+    const slideIds = ['hero', 'problem', 'solution', 'features', 'risks', 'impact'];
+    const dots = document.querySelectorAll('.slide-progress .dot');
+    const navLinks = document.querySelectorAll('nav ul li a');
+    let currentSlideIndex = 0;
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(dot.dataset.slide);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+
+          dots.forEach(d => d.classList.remove('active'));
+          const activeDot = document.querySelector(`.dot[data-slide="${id}"]`);
+          if (activeDot) activeDot.classList.add('active');
+
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+
+          currentSlideIndex = slideIds.indexOf(id);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    slideIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    });
+
+    // ==========================================
+    // AUTO-PLAY WITH SPEED CONTROL
+    // ==========================================
+    let autoPlayInterval = null;
+    let isAutoPlaying = false;
+    const speedSteps = [2000, 5000, 8000, 12000, 15000];
+    let currentSpeedIndex = 1;
+
+    const autoPlayBtn = document.getElementById('autoPlayBtn');
+    const autoPlayControls = document.getElementById('autoPlayControls');
+    const speedUpBtn = document.getElementById('speedUpBtn');
+    const speedDownBtn = document.getElementById('speedDownBtn');
+    const speedDisplay = document.getElementById('speedDisplay');
+
+    function updateSpeedDisplay() {
+      speedDisplay.textContent = (speedSteps[currentSpeedIndex] / 1000) + 's';
+    }
+
+    function restartInterval() {
+      if (isAutoPlaying) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(() => {
+          currentSlideIndex = (currentSlideIndex + 1) % slideIds.length;
+          const target = document.getElementById(slideIds[currentSlideIndex]);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }, speedSteps[currentSpeedIndex]);
+      }
+    }
+
+    function startAutoPlay() {
+      isAutoPlaying = true;
+      autoPlayBtn.classList.add('playing');
+      autoPlayControls.classList.add('show-speed');
+      autoPlayBtn.querySelector('.play-icon').textContent = '⏸';
+      updateSpeedDisplay();
+
+      autoPlayInterval = setInterval(() => {
+        currentSlideIndex = (currentSlideIndex + 1) % slideIds.length;
+        const target = document.getElementById(slideIds[currentSlideIndex]);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, speedSteps[currentSpeedIndex]);
+    }
+
+    function stopAutoPlay() {
+      isAutoPlaying = false;
+      autoPlayBtn.classList.remove('playing');
+      autoPlayControls.classList.remove('show-speed');
+      autoPlayBtn.querySelector('.play-icon').textContent = '▶';
+      clearInterval(autoPlayInterval);
+    }
+
+    autoPlayBtn.addEventListener('click', () => {
+      if (isAutoPlaying) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay();
+      }
+    });
+
+    speedUpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentSpeedIndex > 0) {
+        currentSpeedIndex--;
+        updateSpeedDisplay();
+        restartInterval();
+      }
+    });
+
+    speedDownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentSpeedIndex < speedSteps.length - 1) {
+        currentSpeedIndex++;
+        updateSpeedDisplay();
+        restartInterval();
+      }
+    });
+
+    window.addEventListener('wheel', () => {
+      if (isAutoPlaying) stopAutoPlay();
+    }, { passive: true });
+
+    window.addEventListener('touchmove', () => {
+      if (isAutoPlaying) stopAutoPlay();
+    }, { passive: true });
+</script>
+
+</body>
+</html>
